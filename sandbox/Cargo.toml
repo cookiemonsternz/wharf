@@ -1,0 +1,8 @@
+[package]
+name = "sandbox"
+version.workspace = true
+edition.workspace = true
+default-run = "sandbox"
+
+[dependencies]
+wharf.workspace = true
