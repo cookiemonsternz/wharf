@@ -5,12 +5,13 @@ pub type MouseCode = u8;
 
 #[derive(Debug)]
 pub enum Event {
+    None,
     // Window
     WindowClose,
     WindowResize { width: u32, height: u32 },
     WindowFocus,
     WindowLostFocus,
-    WindowMoved { x: u32, y: u32 },
+    WindowMoved { x: i32, y: i32 },
     // App
     AppTick,
     AppUpdate,
@@ -28,6 +29,7 @@ pub enum Event {
 impl Display for Event {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            Event::None => Ok(()),
             Event::WindowClose => write!(f, "WindowCloseEvent"),
             Event::WindowResize { width, height } => {
                 write!(f, "WindowResizeEvent: w:{} h:{}", width, height)
