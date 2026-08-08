@@ -1,6 +1,5 @@
+use crate::*;
 use log::info;
-
-use crate::{Application, Event};
 
 #[derive(Debug)]
 pub struct Engine<A: Application> {

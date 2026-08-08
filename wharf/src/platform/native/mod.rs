@@ -1,11 +1,10 @@
-use crate::wharf::{Application, engine::Engine};
 use crate::*;
-use winit::event::{MouseButton, WindowEvent};
-use winit::window::Window;
 use winit::{
     self,
     application::ApplicationHandler,
+    event::{MouseButton, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
+    window::Window,
 };
 
 #[derive(Debug)]
@@ -30,7 +29,6 @@ impl<A: Application> ApplicationHandler for WinitApplication<A> {
         event: WindowEvent,
     ) {
         match event {
-            WindowEvent::Resized(size) => info!("{}, {}", size.width, size.height),
             WindowEvent::RedrawRequested => {
                 self.window.as_ref().unwrap().request_redraw();
             }
@@ -78,9 +76,9 @@ fn to_wharf_event(win_event: WindowEvent) -> Option<Event> {
         // App
         // Key
         WindowEvent::KeyboardInput {
-            device_id,
+            device_id: _,
             event,
-            is_synthetic,
+            is_synthetic: _,
         } => {
             // Need to fix key handling properly later! Doesn't account for like any edge cases lol
             let key = match event.physical_key {
@@ -97,7 +95,7 @@ fn to_wharf_event(win_event: WindowEvent) -> Option<Event> {
         }
         // Mouse
         WindowEvent::MouseInput {
-            device_id,
+            device_id: _,
             state,
             button,
         } => {
@@ -112,16 +110,16 @@ fn to_wharf_event(win_event: WindowEvent) -> Option<Event> {
             }
         }
         WindowEvent::CursorMoved {
-            device_id,
+            device_id: _,
             position,
         } => Some(Event::MouseMoved {
             x: position.x,
             y: position.y,
         }),
         WindowEvent::MouseWheel {
-            device_id,
+            device_id: _,
             delta,
-            phase,
+            phase: _,
         } => match delta {
             winit::event::MouseScrollDelta::LineDelta(x, y) => Some(Event::MouseScrolled {
                 x_offset: x as f64,

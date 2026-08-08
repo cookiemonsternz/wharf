@@ -1,5 +1,4 @@
-use super::application::Application;
-use super::engine::Engine;
+use crate::*;
 
 pub fn run_application<T: Application>() {
     crate::init();

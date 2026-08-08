@@ -1,0 +1,59 @@
+@startuml
+allowmixing
+
+class Engine /' Entry point. Owns main loop + passes events to scenetree, servers, etc '/
+package "Scene" {
+    class SceneTree 
+    class Node
+    class Texture
+}
+package "Servers" {
+    class RenderingServer
+    class AudioServer
+    class DisplayServer
+}
+package "Platform" {
+    class RenderingBackend
+    class AudioBackend
+    class DisplayBackend
+}
+package "Core" {
+    class Object
+    class Resource
+    class Script
+}
+package "Modules" {
+    class UserRustScript
+}
+
+Engine --> "many" UserRustScript
+Engine --> Servers
+Engine --> SceneTree
+Node <- SceneTree
+Texture --|> Resource
+Object -|> Resource
+Node --|> Object
+DisplayServer --> DisplayBackend
+RenderingServer --> RenderingBackend
+AudioServer --> AudioBackend
+@enduml
+@startuml
+class Engine
+package "Servers" {
+    note "Engine wide services, e.g RenderingServer" as N2
+}
+package "Platform" {
+    note "Backend, per platform implementations" as N3
+}
+package "Core" {
+    note "Provides core types: E.g Resource, Object" as N1
+}
+package "SceneTree" {
+    note "Actual scene tree" as N5
+}
+
+Engine --> Servers
+Engine --> SceneTree
+
+Servers --> Platform
+@enduml
