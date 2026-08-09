@@ -15,3 +15,5 @@ impl<A: Application> Engine<A> {
         info!("Engine: {}", event);
     }
 }
+
+pub struct EngineContext {}

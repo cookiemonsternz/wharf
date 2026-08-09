@@ -8,6 +8,7 @@ pub mod service;
 // Re-exports
 pub use application::Application;
 pub use engine::Engine;
+pub use engine::EngineContext;
 pub use entry_point::run_application;
 pub use event::Event;
 pub use event::KeyCode;

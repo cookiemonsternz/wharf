@@ -68,29 +68,6 @@ Wharf is multiplatform (desktop) 3D engine specifically targeting SDF based rend
 
 ## Structure wise
 
-Architecture similar to Godot.
-@startuml
-class Engine
-package "Servers" {
-note "Engine wide services, e.g RenderingServer" as N2
-}
-package "Platform" {
-note "Backend, per platform implementations" as N3
-}
-package "Core" {
-note "Provides core types: E.g Resource, Object. Everything depends on this :)" as N1
-}
-package "SceneTree" {
-note "Actual scene tree" as N5
-}
-
-Engine --> Servers
-Engine --> SceneTree
-Servers --> Platform
-@enduml
-
-> <https://godotengine.org/article/why-does-godot-use-servers-and-rids/>
-
 There is no script runtime or anything because the game is just a cargo project with libwharf as a dependency. Custom nodes, etc are effectively just engine extensions.
 The editor creates the cargo project with a default entry_point macro which just redirects the entry point to libwharf to handle actually starting stuff.
 
@@ -154,7 +131,6 @@ Execution order of engine internals functions somewhat similarly to Hazel. Inste
 
 - ScriptService
 - PhysicsService
-- RenderingService
 - ImGUIService
 
 Services register with a scheduler (part of the core engine class) which then runs execution hooks in order. For example:
@@ -194,3 +170,7 @@ In the engine, data storage is necessary. Think of stuff like:
 
 State handles general purpose data, like the SceneTree, which will be needed across multiple services. 
 There isn't a trait so much as a semantic definition. State only stores data, is directly owned by Engine, and is typically acessed by multiple services. PhysicsWorld and RenderWorld therefore would not fall under this case, and instead be owned by their respective services and be referenced if needed by handles.
+
+## Renderer
+
+The renderer is set up as a simple service. Every frame it parses the SceneTree and calls the backend (currently only vulkan) to render.

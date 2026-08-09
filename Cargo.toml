@@ -1,5 +1,5 @@
 [workspace]
-members = ["wharf","sandbox", "xtask"]
+members = ["wharf","sandbox", "xtask", "wharf-macros"]
 resolver = "3"
 
 [workspace.package]
@@ -8,6 +8,7 @@ edition = "2024"
 
 [workspace.dependencies]
 wharf = { path = "wharf" }
+wharf-macros = { path = "wharf-macros" }
 
 [profile.release]
 lto = true
