@@ -2,18 +2,14 @@ use crate::*;
 use log::info;
 
 #[derive(Debug)]
-pub struct Engine<A: Application> {
-    app: A,
-}
+pub struct Engine {}
 
-impl<A: Application> Engine<A> {
-    pub fn new(app: A) -> Self {
-        Self { app }
+impl Engine {
+    pub fn new() -> Self {
+        Self {}
     }
 
     pub fn on_event(&mut self, event: Event) {
         info!("Engine: {}", event);
     }
 }
-
-pub struct EngineContext {}

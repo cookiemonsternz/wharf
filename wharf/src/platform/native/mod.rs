@@ -8,12 +8,12 @@ use winit::{
 };
 
 #[derive(Debug)]
-struct WinitApplication<A: Application> {
-    engine: Engine<A>,
+struct WinitApplication {
+    engine: Engine,
     window: Option<Window>,
 }
 
-impl<A: Application> ApplicationHandler for WinitApplication<A> {
+impl ApplicationHandler for WinitApplication {
     fn resumed(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) {
         self.window = Some(
             event_loop
@@ -41,7 +41,7 @@ impl<A: Application> ApplicationHandler for WinitApplication<A> {
     }
 }
 
-pub fn run<A: Application>(engine: Engine<A>) {
+pub fn run(engine: Engine) {
     info!("Running using native backend (winit)");
 
     let event_loop = EventLoop::new().expect("Could not create event loop");
@@ -57,6 +57,7 @@ pub fn run<A: Application>(engine: Engine<A>) {
         .expect("Could not run winit application");
 }
 
+/// Translates a winit event to a wharf event
 fn to_wharf_event(win_event: WindowEvent) -> Option<Event> {
     match win_event {
         // Window

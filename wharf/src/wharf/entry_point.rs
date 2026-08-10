@@ -1,21 +1,19 @@
 use crate::*;
 
-pub fn run_application<T: Application>() {
+pub fn run() {
     crate::init();
 
-    let app = T::new();
-    let engine = Engine::new(app);
+    let engine = Engine::new();
     crate::platform::run(engine);
 
     crate::shutdown();
 }
 
 #[macro_export]
-/// First argument is a struct type implementing Application
 macro_rules! entrypoint {
-    ($app:ty) => {
+    () => {
         fn main() {
-            $crate::run_application::<$app>();
+            $crate::run();
         }
     };
 }
